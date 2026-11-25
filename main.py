@@ -22,6 +22,7 @@ snake_body = [
 ]
 
 direction = (1, 0)
+pending_direction = direction
 
 
 # Screen on close
@@ -131,6 +132,9 @@ def generate_food(snake_body,canvas):
 
 
 def update_game(canvas, snake_body,food_position):
+    global direction
+    direction = pending_direction
+
     # step 1 move snake
     move_snake(snake_body, direction,food_position,canvas)
 
@@ -181,7 +185,9 @@ def update_game(canvas, snake_body,food_position):
 def on_key_press(event):
     print(f"key pressed:{event.char} (Keysym:{event.keysym})")
 
-    global direction
+    global pending_direction
+    if pending_direction != direction:
+        return  # Apply the first turn before accepting another.
 
     new_direction = direction
 
@@ -200,7 +206,7 @@ def on_key_press(event):
 
     # opposite direction checking if valid then only update the direction
     if new_direction != (-direction[0], -direction[1]):
-        direction = new_direction
+        pending_direction = new_direction
 
 
 canvas.bind("<Key>", on_key_press)
