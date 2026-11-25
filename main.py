@@ -186,16 +186,16 @@ def on_key_press(event):
     new_direction = direction
 
     match event.keysym.lower():
-        case "w":
+        case "w" | "up":
             new_direction = (0, -1)
 
-        case "s":
+        case "s" | "down":
             new_direction = (0, 1)
 
-        case "a":
+        case "a" | "left":
             new_direction = (-1, 0)
 
-        case "d":
+        case "d" | "right":
             new_direction = (1, 0)
 
     # opposite direction checking if valid then only update the direction
